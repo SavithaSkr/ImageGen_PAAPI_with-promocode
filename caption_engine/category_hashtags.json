@@ -1,0 +1,236 @@
+{
+  "Beauty": [
+    "#beautyfinds",
+    "#beautydeals",
+    "#skincare",
+    "#makeup",
+    "#selfcare",
+    "#glowingskin",
+    "#beautyroutine",
+    "#beautyessentials",
+    "#haircare",
+    "#bodycare"
+  ],
+
+  "Beauty Tools": [
+    "#hairtools",
+    "#hairstyling",
+    "#beautygadgets",
+    "#makeuptools",
+    "#groomingtools",
+    "#hairdryer",
+    "#beautyaccessories"
+  ],
+
+  "Electronics": [
+    "#techdeals",
+    "#electronics",
+    "#gadgets",
+    "#techfinds",
+    "#smartdevices",
+    "#techlovers",
+    "#latesttech",
+    "#musthavetech",
+    "#techshopping"
+  ],
+
+  "Gadgets": [
+    "#gadgetdeals",
+    "#smartgadgets",
+    "#techgadgets",
+    "#coolgadgets",
+    "#musthavegadgets",
+    "#gadgetlover",
+    "#innovativetech"
+  ],
+
+  "Home": [
+    "#homefinds",
+    "#homedecor",
+    "#homeessentials",
+    "#interiordesign",
+    "#homeinspo",
+    "#cozyhome",
+    "#modernhome",
+    "#homemakeover",
+    "#homeorganization"
+  ],
+
+  "Decor": [
+    "#decorinspo",
+    "#homeaesthetic",
+    "#interiorinspo",
+    "#moderndecor",
+    "#homedecorideas",
+    "#roommakeover",
+    "#decorfinds",
+    "#aestheticdecor"
+  ],
+
+  "Kitchen": [
+    "#kitchenfinds",
+    "#kitchenessentials",
+    "#cookware",
+    "#kitcheninspiration",
+    "#kitchenorganization",
+    "#homecooking",
+    "#kitchengadgets",
+    "#musthavekitchen"
+  ],
+
+  "Cleaning": [
+    "#cleaninghacks",
+    "#cleaningtools",
+    "#homecleaning",
+    "#cleaningessentials",
+    "#cleanwithme",
+    "#cleanhome",
+    "#deepcleaning",
+    "#organizationtips"
+  ],
+
+  "Kids & Toys": [
+    "#kidsfinds",
+    "#toysforkids",
+    "#kidstoys",
+    "#playtimefun",
+    "#momlife",
+    "#kidsessentials",
+    "#babyproducts",
+    "#parentinghacks"
+  ],
+
+  "Baby": [
+    "#babyproducts",
+    "#newmom",
+    "#momlife",
+    "#babyessentials",
+    "#nurserydecor",
+    "#babygadgets",
+    "#parentingtips"
+  ],
+
+  "Crafts": [
+    "#craftdeals",
+    "#diyprojects",
+    "#handmadecrafts",
+    "#craftingfun",
+    "#creativesupplies",
+    "#artsandcrafts",
+    "#craftideas",
+    "#makersgonnamake"
+  ],
+
+  "Fashion": [
+    "#fashionfinds",
+    "#styleinspo",
+    "#outfitideas",
+    "#trendylooks",
+    "#fashiondeals",
+    "#affordablefashion",
+    "#ootdinspo",
+    "#fashionaccessories"
+  ],
+
+  "Fitness": [
+    "#fitnessfinds",
+    "#workoutgear",
+    "#fitnesstools",
+    "#homeworkout",
+    "#gymessentials",
+    "#fitnessmotivation",
+    "#runninggear",
+    "#healthylifestyle"
+  ],
+
+  "Health": [
+    "#wellness",
+    "#healthproducts",
+    "#vitamins",
+    "#personalcare",
+    "#healthyliving",
+    "#selfcareproducts",
+    "#wellnesstips"
+  ],
+
+  "Pets": [
+    "#petdeals",
+    "#petessentials",
+    "#doglovers",
+    "#catlovers",
+    "#petsupplies",
+    "#petproducts",
+    "#furryfriends",
+    "#petcare"
+  ],
+
+  "Office": [
+    "#officeessentials",
+    "#workfromhome",
+    "#desksetup",
+    "#productivitytools",
+    "#officesupplies",
+    "#workspaceinspo",
+    "#deskorganization",
+    "#studymotivation"
+  ],
+
+  "Outdoors & Camping": [
+    "#campinggear",
+    "#outdooradventures",
+    "#hikingessentials",
+    "#travelgear",
+    "#outdoordeals",
+    "#campinglife",
+    "#travelfinds",
+    "#outdoorliving"
+  ],
+
+  "Sports": [
+    "#sportsgear",
+    "#athleticequipment",
+    "#sportsdeals",
+    "#outdoorsports",
+    "#sportsaccessories",
+    "#athleticwear"
+  ],
+
+  "Automotive": [
+    "#cardeals",
+    "#caraccessories",
+    "#carcare",
+    "#drivingessentials",
+    "#vehicleaccessories",
+    "#autoproducts",
+    "#carorganization"
+  ],
+
+  "Garden": [
+    "#gardeningtools",
+    "#gardenessentials",
+    "#patiofinds",
+    "#outdoorhome",
+    "#plantlover",
+    "#gardeninspiration",
+    "#yardmakeover"
+  ],
+  "Seasonal": [
+    "#holidaydeals",
+    "#blackfridaydeals",
+    "#christmasgifts",
+    "#festivefinds",
+    "#newyearsale",
+    "#giftguide",
+    "#seasonalsavings"
+  ],
+  "Other": [
+    "#amazonfinds",
+    "#musthaves",
+    "#viralproducts",
+    "#giftideas",
+    "#dealsalert",
+    "#budgetbuys",
+    "#shoppingfinds",
+    "#bestseller"
+  ]
+}

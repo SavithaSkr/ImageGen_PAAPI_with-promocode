@@ -1,0 +1,41 @@
+{
+  "Beauty": [
+    "💄 Amazon Beauty Must-Have!\n✨ {benefit}\n👉 Link in comments",
+    "✨ Glow-Up Essential!\n💋 {benefit}\n👉 Link in comments"
+  ],
+
+  "Gadgets": [
+    "⚡ Smart Gadget Find!\n✨ {benefit}\n👉 Link in comments",
+    "🔌 Tech Must-Have!\n✨ {benefit}\n👉 Link in comments"
+  ],
+
+  "Home": [
+    "🏠 Home Hack — Cheap but Genius!\n✨ {benefit}\n👉 Link in comments",
+    "🧹 Mini Home Upgrade!\n✨ {benefit}\n👉 Link in comments"
+  ],
+
+  "Kitchen": [
+    "🍳 Kitchen Tools That Make Life Easier!\n🔥 {benefit}\n👉 Link in comments",
+    "🥗 Kitchen Hack You'll Wish You Knew Earlier!\n✨ {benefit}\n👉 Link in comments"
+  ],
+
+  "Toys": [
+    "🧸 Kids' Favorite Pick!\n✨ {benefit}\n👉 Link in comments",
+    "🚗 Toddler Must-Have!\n✨ {benefit}\n👉 Link in comments"
+  ],
+
+  "Health": [
+    "💪 Fitness & Wellness Find!\n✨ {benefit}\n👉 Link in comments",
+    "🌿 Health Essential!\n✨ {benefit}\n👉 Link in comments"
+  ],
+
+  "Sports": [
+    "🏕️ Outdoor Essential!\n✨ {benefit}\n👉 Link in comments",
+    "🎒 Adventure Must-Have!\n✨ {benefit}\n👉 Link in comments"
+  ],
+
+  "Holiday Gifts": [
+    "🎄 Holiday Gift Idea!\n✨ {benefit}\n👉 Link in comments",
+    "🎁 Perfect Holiday Find!\n✨ {benefit}\n👉 Link in comments"
+  ]
+}
