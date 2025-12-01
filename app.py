@@ -76,7 +76,12 @@ def load_sheet():
         # Prefer GOOGLE_CREDENTIALS_JSON env (Render best practice)
         if GOOGLE_CREDENTIALS_JSON:
             logger.info("Using GOOGLE_CREDENTIALS_JSON from environment")
+
             info = json.loads(GOOGLE_CREDENTIALS_JSON)
+
+            # 🔥 DEBUG LINE — SHOW WHICH SERVICE ACCOUNT RENDER IS USING
+            logger.error(f"Service Account Email Loaded: {info.get('client_email')}")
+
             creds = Credentials.from_service_account_info(info)
             gc = gspread.authorize(creds)
 
