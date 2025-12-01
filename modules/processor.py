@@ -1,4 +1,4 @@
-# modules/processor.py  (FINAL FIXED VERSION)
+# modules/processor.py  (FINAL VERSION WITH MANUAL PROMO SUPPORT)
 
 import os
 import socket
@@ -62,7 +62,7 @@ def is_private_ip(ip_str):
 
 
 # -----------------------------------------------------------
-# 🔧 FIXED: SAFE IMAGE URL VALIDATION (DO NOT CRASH ON EMPTY)
+# SAFE IMAGE URL VALIDATION
 # -----------------------------------------------------------
 def validate_image_url(url: str):
     """
@@ -150,7 +150,7 @@ def process_sheet(sheet, freeimage_key):
     col_caption = ensure("CAPTION_WITH_HASHTAG")
     col_comment = ensure("COMMENTS")
 
-    # Ensure input columns exist so we can write autofill results back
+    # Ensure autofill input columns
     col_product_title = ensure("PRODUCT_TITLE")
     col_imageurl = ensure("IMAGEURL")
     col_price = ensure("PRICE")
@@ -161,7 +161,6 @@ def process_sheet(sheet, freeimage_key):
     caption_results = []
     comment_results = []
 
-    # For writing back autofill input fields
     product_title_results = []
     imageurl_results = []
     price_results = []
@@ -172,9 +171,6 @@ def process_sheet(sheet, freeimage_key):
     # ----------------------------------------
     for idx, row in enumerate(records, start=2):
 
-        # ----------------------------------------------------
-        # 🔧 FIXED: SAFE DEFAULTS BEFORE TRY (prevents crash)
-        # ----------------------------------------------------
         existing_edited = row.get("EDITED_IMAGE") or ""
         existing_pin = row.get("PINTREST_EDITED") or ""
         existing_caption = row.get("CAPTION_WITH_HASHTAG") or ""
@@ -197,17 +193,22 @@ def process_sheet(sheet, freeimage_key):
             raw_color = row.get("COLOR") or row.get("BADGE_COLOR")
             color = clean_color(raw_color)
 
-            # ---------------------------
-            # PA-API AUTOFILL + PROMO CODE SCRAPER (SAFE)
-            # ---------------------------
+            # -------------------------------------------
+            # NEW: MANUAL PROMO CODE FROM SHEET
+            # -------------------------------------------
+            manual_promo_code = row.get("PROMO_CODE", "").strip()
+
             promo_data = None
             promo_code_data = None
 
+            # ---------------------------
+            # AUTOFILL (PA-API + SCRAPER)
+            # ---------------------------
             if link:
                 try:
                     autofill = get_product_data(link)
                 except Exception:
-                    logger.exception("Autofill failed; proceeding with available values")
+                    logger.exception("Autofill failed")
                     autofill = None
 
                 if autofill:
@@ -226,14 +227,20 @@ def process_sheet(sheet, freeimage_key):
                     promo_data = autofill.get("promo")
                     promo_code_data = autofill.get("promo_code")
 
+                    # -------------------------------------------
+                    # MANUAL PROMO OVERRIDE (ONLY WHEN PROVIDED)
+                    # -------------------------------------------
+                    if manual_promo_code:
+                        promo_code_data = {
+                            "has_promo": True,
+                            "code": manual_promo_code,
+                            "discount": "",
+                            "text": f"Use code {manual_promo_code}"
+                        }
+
             # Safety
             image_url = validate_image_url(image_url)
 
-            # Keep autofill values to write back — append later to ensure length matches
-
-            # ---------------------------
-            # SKIP CHECKS
-            # ---------------------------
             need_edit = not bool(existing_edited)
             need_pin = not bool(existing_pin)
             need_caption = not bool(existing_caption)
@@ -244,7 +251,7 @@ def process_sheet(sheet, freeimage_key):
                 pinterest_results.append([existing_pin])
                 caption_results.append([existing_caption])
                 comment_results.append([existing_comment])
-                # Append autofill values so the results remain the same length
+
                 product_title_results.append([product_name])
                 imageurl_results.append([image_url])
                 price_results.append([price])
@@ -281,10 +288,8 @@ def process_sheet(sheet, freeimage_key):
                     if freeimage_key:
                         link1 = upload_to_freeimage(out1, freeimage_key)
                     else:
-                        logger.info("FREEIMAGE_API_KEY not configured: skipping upload for edited image")
                         link1 = out1
-                except Exception as e:
-                    logger.exception("Failed to upload edited image; keeping local path or existing link")
+                except:
                     link1 = out1 or existing_edited
 
             if need_pin and local:
@@ -300,10 +305,8 @@ def process_sheet(sheet, freeimage_key):
                     if freeimage_key:
                         link2 = upload_to_freeimage(out2, freeimage_key)
                     else:
-                        logger.info("FREEIMAGE_API_KEY not configured: skipping upload for pinterest image")
                         link2 = out2
-                except Exception as e:
-                    logger.exception("Failed to upload pinterest image; keeping local path or existing link")
+                except:
                     link2 = out2 or existing_pin
 
             # ---------------------------
@@ -318,26 +321,28 @@ def process_sheet(sheet, freeimage_key):
                         product_name,
                         link,
                         promo_data,
-                        promo_code_data
+                        promo_code_data  # <- promo (auto OR manual)
                     )
-                except Exception:
-                    logger.exception("Failed to generate caption; falling back to simple header")
+                except:
                     head = "(Ad)(#CommissionEarned)"
                     header_text = f"{head}\n{product_name}" if product_name else head
-                    caption = f"{header_text}\n\n👉 {link}" if link else header_text
+                    caption = f"{header_text}\n\n👉 {link}"
 
             if need_comment:
                 comment_text = generate_comment_prompt(product_name)
 
+                # OPTIONAL: include manual promo code in comments
+                if manual_promo_code:
+                    comment_text += f"\n✨ Use Code: {manual_promo_code} (may expire anytime)"
+
             # ---------------------------
-            # OUTPUTS
+            # STORE OUTPUTS
             # ---------------------------
             edited_results.append([link1])
             pinterest_results.append([link2])
             caption_results.append([caption])
             comment_results.append([comment_text])
 
-            # Track autofill values to write back to sheet
             product_title_results.append([product_name])
             imageurl_results.append([image_url])
             price_results.append([price])
@@ -346,12 +351,11 @@ def process_sheet(sheet, freeimage_key):
         except Exception as e:
             logger.error(f"Row {idx} failed: {e}")
 
-            edited_results.append([existing_edited or "ERROR"])
-            pinterest_results.append([existing_pin or "ERROR"])
-            caption_results.append([existing_caption or "ERROR"])
-            comment_results.append([existing_comment or "ERROR"])
+            edited_results.append(["ERROR"])
+            pinterest_results.append(["ERROR"])
+            caption_results.append(["ERROR"])
+            comment_results.append(["ERROR"])
 
-            # If autofill fails, preserve original inputs (or write empties)
             product_title_results.append([product_name])
             imageurl_results.append([image_url])
             price_results.append([price])
@@ -373,7 +377,6 @@ def process_sheet(sheet, freeimage_key):
     sheet.update(f"{chr(64 + col_caption)}2:{chr(64 + col_caption)}{len(records) + 1}", caption_results)
     sheet.update(f"{chr(64 + col_comment)}2:{chr(64 + col_comment)}{len(records) + 1}", comment_results)
 
-    # Write back autofilled input fields so subsequent runs or other processors can use them
     sheet.update(f"{chr(64 + col_product_title)}2:{chr(64 + col_product_title)}{len(records) + 1}", product_title_results)
     sheet.update(f"{chr(64 + col_imageurl)}2:{chr(64 + col_imageurl)}{len(records) + 1}", imageurl_results)
     sheet.update(f"{chr(64 + col_price)}2:{chr(64 + col_price)}{len(records) + 1}", price_results)
