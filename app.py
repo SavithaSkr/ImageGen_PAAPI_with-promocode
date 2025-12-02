@@ -77,26 +77,34 @@ def load_sheet():
         if GOOGLE_CREDENTIALS_JSON:
             logger.info("Using GOOGLE_CREDENTIALS_JSON from environment")
 
+            # Load JSON
             info = json.loads(GOOGLE_CREDENTIALS_JSON)
 
-            # 🔥 DEBUG LINE — SHOW WHICH SERVICE ACCOUNT RENDER IS USING
-            logger.error(f"Service Account Email Loaded: {info.get('client_email')}")
+            # 🔥 DEBUG: Print the service account email Render is REALLY using
+            sa_email = info.get("client_email")
+            logger.error(f"🔥 SERVICE ACCOUNT USED BY RENDER: {sa_email}")
 
+            # 🔥 DEBUG: Print the project ID too
+            project_id = info.get("project_id")
+            logger.error(f"🔥 PROJECT ID USED: {project_id}")
+
+            # Continue authorization
             creds = Credentials.from_service_account_info(info)
             gc = gspread.authorize(creds)
 
         else:
-            # Fallback (works on local machine only)
+            # Fallback only for local environment
             logger.info(f"Using service_account.json file: {SERVICE_ACCOUNT_JSON}")
+
             gc = gspread.service_account(filename=SERVICE_ACCOUNT_JSON)
 
         if not SHEET_ID:
-            raise RuntimeError("SHEET_ID environment variable missing.")
+            raise RuntimeError("SHEET_ID environment variable is missing.")
 
         ss = gc.open_by_key(SHEET_ID)
 
         if SHEET_NAME:
-            logger.info(f"Opening sheet: {SHEET_NAME}")
+            logger.info(f"Opening worksheet: {SHEET_NAME}")
             return ss.worksheet(SHEET_NAME)
 
         logger.info("Opening default sheet (sheet1)")
@@ -105,6 +113,7 @@ def load_sheet():
     except Exception as e:
         logger.exception("❌ Google Sheet loading failed")
         raise HTTPException(status_code=500, detail=f"Google Sheet Error: {e}")
+
 
 
 # -------------------------------------------------------------
